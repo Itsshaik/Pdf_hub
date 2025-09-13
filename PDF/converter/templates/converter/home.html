@@ -1,0 +1,152 @@
+{% extends 'converter/base.html' %}
+
+{% block title %}PDF Processor - Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="text-center mb-5">
+            <h1 class="display-4">
+                <i class="fas fa-file-pdf text-primary"></i>
+                PDF Processor
+            </h1>
+            <p class="lead">Your all-in-one solution for PDF processing, image conversion, and text extraction</p>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6 col-lg-4">
+        <div class="card feature-card h-100">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <i class="fas fa-images fa-3x text-primary"></i>
+                </div>
+                <h5 class="card-title">Image to PDF</h5>
+                <p class="card-text">Convert multiple images (JPG, PNG, TIFF, BMP) into a single PDF document.</p>
+                <a href="{% url 'image_to_pdf' %}" class="btn btn-primary">
+                    <i class="fas fa-arrow-right"></i> Convert Images
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card feature-card h-100">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <i class="fas fa-compress fa-3x text-success"></i>
+                </div>
+                <h5 class="card-title">PDF Merger</h5>
+                <p class="card-text">Combine multiple PDF files into one comprehensive document.</p>
+                <a href="{% url 'pdf_merge' %}" class="btn btn-success">
+                    <i class="fas fa-arrow-right"></i> Merge PDFs
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card feature-card h-100">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <i class="fas fa-lock fa-3x text-warning"></i>
+                </div>
+                <h5 class="card-title">PDF Password Protection</h5>
+                <p class="card-text">Secure your PDF documents with password encryption.</p>
+                <a href="{% url 'pdf_password' %}" class="btn btn-warning">
+                    <i class="fas fa-arrow-right"></i> Protect PDF
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card feature-card h-100">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <i class="fas fa-file-powerpoint fa-3x text-danger"></i>
+                </div>
+                <h5 class="card-title">PDF to PowerPoint</h5>
+                <p class="card-text">Convert PDF documents to PowerPoint presentations.</p>
+                <a href="{% url 'pdf_to_ppt' %}" class="btn btn-danger">
+                    <i class="fas fa-arrow-right"></i> Convert to PPT
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card feature-card h-100">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <i class="fas fa-text-width fa-3x text-info"></i>
+                </div>
+                <h5 class="card-title">OCR Text Extraction</h5>
+                <p class="card-text">Extract text from images using advanced OCR technology.</p>
+                <a href="{% url 'ocr_extraction' %}" class="btn btn-info">
+                    <i class="fas fa-arrow-right"></i> Extract Text
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card feature-card h-100">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <i class="fas fa-history fa-3x text-secondary"></i>
+                </div>
+                <h5 class="card-title">Processing History</h5>
+                <p class="card-text">View and download your previously processed files.</p>
+                <a href="{% url 'file_history' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-right"></i> View History
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h3 class="card-title">
+                    <i class="fas fa-info-circle text-primary"></i>
+                    How It Works
+                </h3>
+                <div class="row">
+                    <div class="col-md-3 text-center mb-3">
+                        <div class="mb-2">
+                            <i class="fas fa-upload fa-2x text-primary"></i>
+                        </div>
+                        <h6>1. Upload Files</h6>
+                        <p class="small text-muted">Select your files for processing</p>
+                    </div>
+                    <div class="col-md-3 text-center mb-3">
+                        <div class="mb-2">
+                            <i class="fas fa-cogs fa-2x text-success"></i>
+                        </div>
+                        <h6>2. Process</h6>
+                        <p class="small text-muted">Our system handles the conversion</p>
+                    </div>
+                    <div class="col-md-3 text-center mb-3">
+                        <div class="mb-2">
+                            <i class="fas fa-check fa-2x text-warning"></i>
+                        </div>
+                        <h6>3. Complete</h6>
+                        <p class="small text-muted">Processing completed successfully</p>
+                    </div>
+                    <div class="col-md-3 text-center mb-3">
+                        <div class="mb-2">
+                            <i class="fas fa-download fa-2x text-info"></i>
+                        </div>
+                        <h6>4. Download</h6>
+                        <p class="small text-muted">Get your processed files</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

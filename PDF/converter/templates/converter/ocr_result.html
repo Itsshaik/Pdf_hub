@@ -1,0 +1,62 @@
+{% extends 'converter/base.html' %}
+
+{% block title %}OCR Text Extraction Result{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-text-width"></i>
+                    Extracted Text Result
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle"></i>
+                    Text successfully extracted from your image!
+                </div>
+                
+                <div class="form-group">
+                    <label for="extracted-text" class="form-label">
+                        <strong>Extracted Text:</strong>
+                    </label>
+                    <textarea class="form-control" id="extracted-text" rows="15" readonly>{{ extracted_text }}</textarea>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <button type="button" class="btn btn-primary" onclick="copyToClipboard()">
+                        <i class="fas fa-copy"></i>
+                        Copy to Clipboard
+                    </button>
+                    <a href="{% url 'ocr_extraction' %}" class="btn btn-info ms-2">
+                        <i class="fas fa-plus"></i>
+                        Extract Another
+                    </a>
+                    <a href="{% url 'home' %}" class="btn btn-secondary ms-2">
+                        <i class="fas fa-home"></i>
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function copyToClipboard() {
+    const textArea = document.getElementById('extracted-text');
+    textArea.select();
+    textArea.setSelectionRange(0, 99999);
+    
+    try {
+        document.execCommand('copy');
+        alert('Text copied to clipboard!');
+    } catch (err) {
+        console.error('Failed to copy text: ', err);
+        alert('Failed to copy text. Please select and copy manually.');
+    }
+}
+</script>
+{% endblock %}

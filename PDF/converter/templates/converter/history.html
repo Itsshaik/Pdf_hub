@@ -1,0 +1,139 @@
+{% extends 'converter/base.html' %}
+
+{% block title %}Processing History{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-history"></i>
+                    Processing History
+                </h4>
+            </div>
+            <div class="card-body">
+                {% if files %}
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Operation</th>
+                                    <th>Original File</th>
+                                    <th>File Size</th>
+                                    <th>Created</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for file in files %}
+                                <tr>
+                                    <td>
+                                        {% if file.operation == 'image_to_pdf' %}
+                                            <i class="fas fa-images text-primary"></i> Image to PDF
+                                        {% elif file.operation == 'pdf_merge' %}
+                                            <i class="fas fa-compress text-success"></i> PDF Merge
+                                        {% elif file.operation == 'pdf_password' %}
+                                            <i class="fas fa-lock text-warning"></i> Password Protection
+                                        {% elif file.operation == 'pdf_to_ppt' %}
+                                            <i class="fas fa-file-powerpoint text-danger"></i> PDF to PowerPoint
+                                        {% elif file.operation == 'ocr_extraction' %}
+                                            <i class="fas fa-text-width text-info"></i> OCR Extraction
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ file.original_file.name|truncatechars:30 }}</td>
+                                    <td>{{ file.file_size|filesizeformat }}</td>
+                                    <td>{{ file.created_at|date:"M d, Y H:i" }}</td>
+                                    <td>
+                                        {% if file.is_processed %}
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-check"></i> Completed
+                                            </span>
+                                        {% else %}
+                                            <span class="badge bg-warning">
+                                                <i class="fas fa-clock"></i> Processing
+                                            </span>
+                                        {% endif %}
+                                        {% if file.error_message %}
+                                            <span class="badge bg-danger">
+                                                <i class="fas fa-exclamation-triangle"></i> Error
+                                            </span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if file.is_processed and file.processed_file %}
+                                            <a href="{% url 'download_file' file.id %}" class="btn btn-sm btn-primary">
+                                                <i class="fas fa-download"></i> Download
+                                            </a>
+                                        {% elif file.operation == 'ocr_extraction' and file.extracted_text %}
+                                            <button class="btn btn-sm btn-info" onclick="showExtractedText({{ file.id }}, '{{ file.extracted_text|escapejs }}')">
+                                                <i class="fas fa-eye"></i> View Text
+                                            </button>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                        <h5>No processing history found</h5>
+                        <p class="text-muted">Start by converting some files to see your history here.</p>
+                        <a href="{% url 'home' %}" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Start Processing
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for viewing extracted text -->
+<div class="modal fade" id="textModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-text-width"></i> Extracted Text
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" id="modalTextContent" rows="15" readonly></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="copyModalText()">
+                    <i class="fas fa-copy"></i> Copy Text
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function showExtractedText(fileId, text) {
+    document.getElementById('modalTextContent').value = text;
+    const modal = new bootstrap.Modal(document.getElementById('textModal'));
+    modal.show();
+}
+
+function copyModalText() {
+    const textArea = document.getElementById('modalTextContent');
+    textArea.select();
+    textArea.setSelectionRange(0, 99999);
+    
+    try {
+        document.execCommand('copy');
+        alert('Text copied to clipboard!');
+    } catch (err) {
+        console.error('Failed to copy text: ', err);
+        alert('Failed to copy text. Please select and copy manually.');
+    }
+}
+</script>
+{% endblock %}

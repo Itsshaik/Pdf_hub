@@ -1,0 +1,43 @@
+{% extends 'converter/base.html' %}
+
+{% block title %}Image to PDF Converter{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-images"></i>
+                    Convert Images to PDF
+                </h4>
+            </div>
+            <div class="card-body">
+                <p>Upload multiple images to convert them into a single PDF document. Supported formats: JPG, PNG, TIFF, BMP</p>
+                
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="upload-area" onclick="document.getElementById('images').click()">
+                        <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-3"></i>
+                        <h5>Click to select images</h5>
+                        <p class="text-muted">You can select multiple images at once</p>
+                        <input type="file" id="images" name="images" multiple accept="image/*" class="file-input" onchange="handleFileSelect('images', 'file-info')">
+                    </div>
+                    <div id="file-info" class="text-muted mt-2">No files selected</div>
+                    
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-file-pdf"></i>
+                            Convert to PDF
+                        </button>
+                        <a href="{% url 'home' %}" class="btn btn-secondary btn-lg ms-2">
+                            <i class="fas fa-arrow-left"></i>
+                            Back to Home
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
